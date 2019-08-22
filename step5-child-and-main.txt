@@ -1,0 +1,82 @@
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+  <div class="childbox">
+    <h1>Child Component</h1>
+    <ng-content select="h3"></ng-content>
+    <ng-content></ng-content>
+    <ng-content select="[class='citi']"></ng-content>
+    <ul>
+      <li>{{ citiprop }}</li>
+    </ul>
+  </div>
+  `,
+  styles: [`
+    .childbox{
+      padding : 10px;
+      margin : auto;
+      background-color : orange;
+      border : 1px solid red;
+    }
+  `]
+})
+export class ChildComponent{
+  @Input('citi') citiprop = "default value"
+}
+================================================================
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template : `
+  <div class="box">
+    <h1 [innerHTML]="title"></h1>
+    <input [(ngModel)]="title" type="text">
+    <app-child [citi]="title">
+      <h2>Hello Child Component from Heading 2</h2>
+      <h2>Hello Child Component from Heading 2</h2>
+      <h3>Hello Child Component from Heading 3</h3>
+      <h2 class="citi">Hello Citi Component</h2>
+      <h2>Hello Child Component from Heading 2</h2>
+    </app-child>
+  </div>
+  `,
+  styles: [`
+    .box{
+      padding : 10px;
+      margin : auto;
+      background-color : silver;
+      border : 1px solid slategray;
+    }
+  `]
+})
+export class AppComponent {
+  title = 'Main Component';
+}
+
+================================================================
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { ChildComponent } from './child.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ChildComponent
+  ],
+  imports: [
+    BrowserModule, FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+================================================================
